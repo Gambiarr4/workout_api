@@ -1,7 +1,7 @@
 from typing import Annotated, Optional
-from pydantic import Field, PositiveFloat
-from workout_api.categorias.schemas import CategoriaIn
-from workout_api.centro_treinamento.schemas import CentroTreinamentoAtleta
+from pydantic import Field, PositiveFloat, BaseModel
+from workout_api.categorias.schemas import CategoriaIn, CategoriaOut
+from workout_api.centro_treinamento.schemas import CentroTreinamentoAtleta, CentroTreinamentoOut
 
 from workout_api.contrib.schemas import BaseSchema, OutMixin
 
@@ -27,3 +27,12 @@ class AtletaOut(Atleta, OutMixin):
 class AtletaUpdate(BaseSchema):
     nome: Annotated[Optional[str], Field(None, description='Nome do atleta', example='Joao', max_length=50)]
     idade: Annotated[Optional[int], Field(None, description='Idade do atleta', example=25)]
+
+class AtletaSumario(BaseModel):
+    nome: str = Field(None, title='Nome do atleta')
+    centro_treinamento: CentroTreinamentoOut = Field(
+        None, title='Centro de Treinamento do atleta'
+    )
+    categoria: CategoriaOut = Field(
+        None, title='Categoria do atleta'
+    )
